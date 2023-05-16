@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { vacanciesReducer } from '../features/vacancies/vacancies';
+import { cataloguesReducer } from '../features/catalogues/catalogues';
 
 const store = configureStore({
   reducer: {
     vacancies: vacanciesReducer,
+    catalogues: cataloguesReducer,
   },
 });
 
