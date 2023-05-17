@@ -48,9 +48,16 @@ const vacanciesSlice = createSlice({
         builder
             .addCase(loadVacancies.fulfilled, (state, action) => {
                 vacanciesAdapter.setMany(state, action.payload.objects);
+            })
+            .addCase(loadVacancies.rejected, (state, action) => {
+                console.error('Vacancies loading error:', action.error);
             });
     },
 });
+
+export const {
+    selectAll: selectAllVacancies,
+} = vacanciesAdapter.getSelectors((state: StateWithVacancies) => state.vacancies);
 
 export const vacanciesReducer = vacanciesSlice.reducer;
 
