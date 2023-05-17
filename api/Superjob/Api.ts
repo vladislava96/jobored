@@ -11,13 +11,13 @@ export default class Api {
         return Api.instance;
     }
 
-    private baseUrl = process.env.NEXT_PUBLIC__URL || '';
-    private secretKey = process.env.NEXT_PUBLIC__SECRET_KEY || '';
-    private login = process.env.NEXT_PUBLIC__LOGIN || '';
-    private password = process.env.NEXT_PUBLIC__PASSWORD || '';
-    private clientId = process.env.NEXT_PUBLIC__CLIENT_ID || '';
-    private clientSecret = process.env.NEXT_PUBLIC__CLIENT_SECRET || '';
-    private hr = process.env.NEXT_PUBLIC__HR || '';
+    private baseUrl = process.env.NEXT_PUBLIC_SUPERJOB_URL || '';
+    private secretKey = process.env.NEXT_PUBLIC_SUPERJOB_SECRET_KEY || '';
+    private login = process.env.NEXT_PUBLIC_SUPERJOB_LOGIN || '';
+    private password = process.env.NEXT_PUBLIC_SUPERJOB_PASSWORD || '';
+    private clientId = process.env.NEXT_PUBLIC_SUPERJOB_CLIENT_ID || '';
+    private clientSecret = process.env.NEXT_PUBLIC_SUPERJOB_CLIENT_SECRET || '';
+    private hr = process.env.NEXT_PUBLIC_SUPERJOB_HR || '';
 
     private authorization?: Authorization;
 
@@ -45,6 +45,30 @@ export default class Api {
         return response.json();
     }
 
+    public async refreshAuthorization(): Promise<Authorization> {
+        const authorization = await this.authorizeIfRequire();
+
+        const url = new URL('oauth2/refresh_token', this.baseUrl);
+        url.searchParams.set('client_id', this.clientId);
+        url.searchParams.set('client_secret', this.clientSecret);
+
+        const request: RequestInit = {
+            method: 'GET',
+            headers: {
+                'X-Secret-Key': this.secretKey,
+                Accept: 'application/json',
+                Authorization: `Bearer ${authorization.refresh_token}`,
+            },
+        };
+
+        const response = await fetch(url, request);
+        if (!response.ok) {
+            throw Error();
+        }
+
+        return response.json();
+    }
+
     public async authorizeIfRequire(): Promise<Authorization> {
         if (this.authorization === undefined) {
             this.authorization = await this.authorize();
@@ -60,8 +84,9 @@ export default class Api {
             method: 'GET',
             headers: {
                 'X-Secret-Key': this.secretKey,
+                'X-Api-App-Id': this.clientSecret,
                 Accept: 'application/json',
-                Authorization: `Bearer ${authorization.accessToken}`,
+                Authorization: `Bearer ${authorization.access_token}`,
             },
         };
 
@@ -102,13 +127,15 @@ export default class Api {
             method: 'GET',
             headers: {
                 'X-Secret-Key': this.secretKey,
+                'X-Api-App-Id': this.clientSecret,
                 Accept: 'application/json',
-                Authorization: `Bearer ${authorization.accessToken}`,
+                Authorization: `Bearer ${authorization.access_token}`,
             },
         };
 
         const response = await fetch(url, request);
         if (!response.ok) {
+            console.log(response);
             throw Error();
         }
 

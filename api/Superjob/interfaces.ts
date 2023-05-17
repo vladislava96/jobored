@@ -1,9 +1,9 @@
 export interface Authorization {
-    accessToken: string;
-    expiresIn: number;
-    refreshToken: string;
-    regUserResumesCount: number;
-    tokenType: string;
+    access_token: string;
+    expires_in: number;
+    refresh_token: string;
+    reg_user_resumes_count: number;
+    token_type: string;
     ttl: number;
 }
 
