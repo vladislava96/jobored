@@ -4,7 +4,7 @@ import { MantineProvider } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 import { Provider as ReduxProvider } from 'react-redux';
 import Header from '../components/Header/Header';
-import './global.css';
+import './global.scss';
 import store from '../app/store';
 
 export default function App(props: AppProps) {

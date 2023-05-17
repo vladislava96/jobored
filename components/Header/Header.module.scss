@@ -1,3 +1,5 @@
+@import '../../pages/_variables';
+
 .header {
   width: 100%;
   background-color: white;
@@ -33,7 +35,7 @@
 }
 
 .header__link_active {
-  background-color: var(--primary500);
+  background-color: $primary500;
 }
 
 @media (max-width: 1108px) {
