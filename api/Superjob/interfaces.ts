@@ -89,3 +89,17 @@ export interface Catalogue {
     key: number;
     positions: CataloguePosition[];
 }
+
+export interface VacancyOptions {
+    page?: number,
+    count?: number,
+    filterParams?: FilterParams,
+}
+
+export interface FilterParams {
+    published?: number,
+    keyword?: string,
+    paymentFrom?: number,
+    paymentTo?: number,
+    catalogues?: number,
+}

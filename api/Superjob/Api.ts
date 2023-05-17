@@ -1,18 +1,25 @@
-import { Authorization, Catalogue, VacancyCollection } from './interfaces';
+import { Authorization, Catalogue, VacancyCollection, VacancyOptions } from './interfaces';
 
 export default class Api {
-    private authorization?: Authorization;
+    private static instance?: Api;
 
-    public constructor(
-        private baseUrl: string,
-        private secretKey: string,
-        private login: string,
-        private password: string,
-        private clientId: string,
-        private clientSecret: string,
-        private hr: string,
-    ) {
+    public static getInstance() {
+        if (Api.instance === undefined) {
+            Api.instance = new Api();
+        }
+
+        return Api.instance;
     }
+
+    private baseUrl = process.env.NEXT_PUBLIC__URL || '';
+    private secretKey = process.env.NEXT_PUBLIC__SECRET_KEY || '';
+    private login = process.env.NEXT_PUBLIC__LOGIN || '';
+    private password = process.env.NEXT_PUBLIC__PASSWORD || '';
+    private clientId = process.env.NEXT_PUBLIC__CLIENT_ID || '';
+    private clientSecret = process.env.NEXT_PUBLIC__CLIENT_SECRET || '';
+    private hr = process.env.NEXT_PUBLIC__HR || '';
+
+    private authorization?: Authorization;
 
     private async authorize(): Promise<Authorization> {
         const url = new URL('oauth2/password', this.baseUrl);
@@ -22,7 +29,7 @@ export default class Api {
         url.searchParams.set('client_secret', this.clientSecret);
         url.searchParams.set('hr', this.hr);
 
-        const options: RequestInit = {
+        const request: RequestInit = {
             method: 'POST',
             headers: {
                 'X-Secret-Key': this.secretKey,
@@ -30,7 +37,7 @@ export default class Api {
             },
         };
 
-        const response = await fetch(url, options);
+        const response = await fetch(url, request);
         if (!response.ok) {
             throw Error();
         }
@@ -49,7 +56,7 @@ export default class Api {
     public async getCatalogues(): Promise<Catalogue[]> {
         const authorization = await this.authorizeIfRequire();
         const url = new URL('catalogues', this.baseUrl);
-        const options: RequestInit = {
+        const request: RequestInit = {
             method: 'GET',
             headers: {
                 'X-Secret-Key': this.secretKey,
@@ -58,7 +65,7 @@ export default class Api {
             },
         };
 
-        const response = await fetch(url, options);
+        const response = await fetch(url, request);
         if (!response.ok) {
             throw Error();
         }
@@ -66,10 +73,32 @@ export default class Api {
         return response.json();
     }
 
-    public async getVacancies(): Promise<VacancyCollection> {
+    public async getVacancies(options: VacancyOptions = {}): Promise<VacancyCollection> {
         const authorization = await this.authorizeIfRequire();
         const url = new URL('vacancies', this.baseUrl);
-        const options: RequestInit = {
+        if (options.count !== undefined) {
+            url.searchParams.set('count', String(options.count));
+        }
+        if (options.page !== undefined) {
+            url.searchParams.set('page', String(options.page));
+        }
+        if (options.filterParams?.published !== undefined) {
+            url.searchParams.set('page', String(options.filterParams.published));
+        }
+        if (options.filterParams?.keyword !== undefined) {
+            url.searchParams.set('page', String(options.filterParams?.keyword));
+        }
+        if (options.filterParams?.paymentFrom !== undefined) {
+            url.searchParams.set('page', String(options.filterParams?.paymentFrom));
+        }
+        if (options.filterParams?.paymentTo !== undefined) {
+            url.searchParams.set('page', String(options.filterParams?.paymentTo));
+        }
+        if (options.filterParams?.catalogues !== undefined) {
+            url.searchParams.set('page', String(options.filterParams?.catalogues));
+        }
+
+        const request: RequestInit = {
             method: 'GET',
             headers: {
                 'X-Secret-Key': this.secretKey,
@@ -78,7 +107,7 @@ export default class Api {
             },
         };
 
-        const response = await fetch(url, options);
+        const response = await fetch(url, request);
         if (!response.ok) {
             throw Error();
         }
