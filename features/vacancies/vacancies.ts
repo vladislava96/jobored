@@ -8,7 +8,8 @@ const initialFilterParams: FilterParams = {};
 
 const initialState = vacanciesAdapter.getInitialState({
     page: 0,
-    count: 5,
+    pageTotal: 1,
+    count: 4,
     filterParams: initialFilterParams,
 });
 
@@ -47,10 +48,14 @@ const vacanciesSlice = createSlice({
     extraReducers(builder) {
         builder
             .addCase(loadVacancies.fulfilled, (state, action) => {
-                vacanciesAdapter.setMany(state, action.payload.objects);
+                state.pageTotal = Math.ceil(action.payload.total / state.count);
+                if (state.pageTotal > 125) {
+                    state.pageTotal = 125;
+                }
+                vacanciesAdapter.setAll(state, action.payload.objects);
             })
             .addCase(loadVacancies.rejected, (state, action) => {
-                console.error('Vacancies loading error:', action.error);
+                global.console.error('Vacancies loading error:', action.error);
             });
     },
 });
@@ -58,6 +63,9 @@ const vacanciesSlice = createSlice({
 export const {
     selectAll: selectAllVacancies,
 } = vacanciesAdapter.getSelectors((state: StateWithVacancies) => state.vacancies);
+
+export const selectVacanciesPage = (state: StateWithVacancies) => state.vacancies.page;
+export const selectVacanciesPageTotal = (state: StateWithVacancies) => state.vacancies.pageTotal;
 
 export const vacanciesReducer = vacanciesSlice.reducer;
 
