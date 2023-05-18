@@ -25,13 +25,8 @@ export const loadVacancies = createAsyncThunk(
     async (_, thunkAPI) => {
         const { vacancies } = thunkAPI.getState() as StateWithVacancies;
         const keyword = vacancies.keyword === '' ? undefined : vacancies.keyword;
-
-        const options = {
-            page: vacancies.page,
-            count: vacancies.count,
-            keyword,
-            filterParams: vacancies.filterParams,
-        };
+        const { page, count, filterParams } = vacancies;
+        const options = { page, count, keyword, filterParams };
 
         return Api.getInstance().getVacancies(options);
     }
@@ -49,6 +44,15 @@ const vacanciesSlice = createSlice({
         },
         setKeyword(state, action: PayloadAction<string>) {
             state.keyword = action.payload;
+        },
+        setCatalogues(state, action: PayloadAction<number | undefined>) {
+            state.filterParams.catalogues = action.payload;
+        },
+        setPaymentFrom(state, action: PayloadAction<number | undefined>) {
+            state.filterParams.paymentFrom = action.payload;
+        },
+        setPaymentTo(state, action: PayloadAction<number | undefined>) {
+            state.filterParams.paymentTo = action.payload;
         },
     },
     extraReducers(builder) {
@@ -76,4 +80,11 @@ export const selectVacanciesKeyword = (state: StateWithVacancies) => state.vacan
 
 export const vacanciesReducer = vacanciesSlice.reducer;
 
-export const { setPage, setFilterParam, setKeyword } = vacanciesSlice.actions;
+export const {
+    setPage,
+    setFilterParam,
+    setKeyword,
+    setCatalogues,
+    setPaymentFrom,
+    setPaymentTo,
+} = vacanciesSlice.actions;

@@ -2,9 +2,17 @@ import { createSlice, createEntityAdapter, createAsyncThunk } from '@reduxjs/too
 import { Catalogue } from '../../api/Superjob/interfaces';
 import Api from '../../api/Superjob/Api';
 
-export const cataloguesAdapter = createEntityAdapter<Catalogue>();
+export const cataloguesAdapter = createEntityAdapter<Catalogue>({
+    selectId: (catalogue) => catalogue.key,
+});
 
 const initialState = cataloguesAdapter.getInitialState();
+
+type CataloguesState = typeof initialState;
+
+interface StateWithCatalogues {
+    catalogues: CataloguesState;
+}
 
 export const loadCatalogues = createAsyncThunk(
     'catalogues/load',
@@ -23,6 +31,8 @@ const cataloguesSlice = createSlice({
     },
 });
 
-export const cataloguesSelectors = cataloguesAdapter.getSelectors();
+export const {
+    selectAll: selectAllCatalogues,
+} = cataloguesAdapter.getSelectors((state: StateWithCatalogues) => state.catalogues);
 
 export const cataloguesReducer = cataloguesSlice.reducer;

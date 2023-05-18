@@ -98,7 +98,6 @@ export interface VacancyOptions {
 }
 
 export interface FilterParams {
-    published?: number,
     paymentFrom?: number,
     paymentTo?: number,
     catalogues?: number,

@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from '../app/hooks';
 import VacanciesList from '../components/VacanciesList/VacanciesList';
 import { loadVacancies, selectAllVacancies, selectVacanciesKeyword, selectVacanciesPage, selectVacanciesPageTotal, setKeyword, setPage } from '../features/vacancies/vacancies';
 import Searcher from '../components/Searcher/Searcher';
+import Filter from '../components/Filter/Filter';
 
 export default function JobSearchPage() {
   const vacancies = useAppSelector(selectAllVacancies);
@@ -30,6 +31,7 @@ export default function JobSearchPage() {
 
   return (
     <>
+      <Filter />
       <Searcher
         keyword={vacanciesKeyword}
         onKeywordChange={onSearcherKeywordChange}

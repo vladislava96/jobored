@@ -101,6 +101,8 @@ export default class Api {
     public async getVacancies(options: VacancyOptions = {}): Promise<VacancyCollection> {
         const authorization = await this.authorizeIfRequire();
         const url = new URL('vacancies', this.baseUrl);
+        url.searchParams.set('published', '1');
+
         if (options.count !== undefined) {
             url.searchParams.set('count', String(options.count));
         }
@@ -110,14 +112,11 @@ export default class Api {
         if (options.keyword !== undefined) {
             url.searchParams.set('keyword', options.keyword);
         }
-        if (options.filterParams?.published !== undefined) {
-            url.searchParams.set('published', String(options.filterParams.published));
-        }
         if (options.filterParams?.paymentFrom !== undefined) {
-            url.searchParams.set('paymentFrom', String(options.filterParams?.paymentFrom));
+            url.searchParams.set('payment_from', String(options.filterParams?.paymentFrom));
         }
         if (options.filterParams?.paymentTo !== undefined) {
-            url.searchParams.set('paymentTo', String(options.filterParams?.paymentTo));
+            url.searchParams.set('payment_to', String(options.filterParams?.paymentTo));
         }
         if (options.filterParams?.catalogues !== undefined) {
             url.searchParams.set('catalogues', String(options.filterParams?.catalogues));
