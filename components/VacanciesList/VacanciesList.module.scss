@@ -1,5 +1,12 @@
 .vacanciesList {
   display: flex;
+  flex-flow: column nowrap;
+  margin-bottom: 44px;
+  align-items: center;
+}
+
+.vacanciesListItems {
+  display: flex;
   flex-direction: column;
   width: 100%;
   gap: 16px;

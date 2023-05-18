@@ -1,0 +1,29 @@
+.jobSearch {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  max-width: var(--max-width);
+  margin: 40px auto 0;
+}
+
+.jobSearchList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 70%;
+}
+
+@media (max-width: 576px) {
+  .jobSearch {
+    flex-flow: column nowrap;
+  }
+
+  .jobSearchList {
+    width: 100%;
+  }
+
+  .jobSearchFilter {
+    width: 100%;
+  }
+}

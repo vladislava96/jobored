@@ -17,9 +17,11 @@ export default function VacanciesList(props: VacanciesListProps) {
 
   return (
     <div className={style.vacanciesList}>
-      {vacancies.map((vacancy) => (
-        <VacancyCard key={vacancy.id} vacancy={vacancy} />
-      ))}
+      <div className={style.vacanciesListItems}>
+        {vacancies.map((vacancy) => (
+          <VacancyCard key={vacancy.id} vacancy={vacancy} />
+        ))}
+      </div>
       <Pagination value={page} onChange={onPageChange} total={pageTotal} />
     </div>
   );

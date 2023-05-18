@@ -1,3 +1,5 @@
+@import 'variables';
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -11,11 +13,51 @@ body {
 }
 
 body {
-  color: var(--black);
-  background-color: var(--grey150);
+  color: $black;
+  background-color: $grey150;
 }
 
 a {
   color: inherit;
   text-decoration: none;
+}
+
+
+label.mantine-InputWrapper-label {
+  line-height: 1;
+  margin-bottom: 8px;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+}
+
+button.mantine-Button-root {
+  background-color: $primary500;
+  border-radius: 8px;
+}
+
+.mantine-InputWrapper-root [role=combobox] svg {
+  transform: rotateZ(0deg);
+  transition: transform 0.3s ease-in-out;
+}
+
+.mantine-InputWrapper-root [role=combobox][aria-expanded=true] svg {
+  transform: rotateZ(180deg);
+}
+
+.mantine-InputWrapper-root [role=combobox][aria-expanded=true] svg path{
+  stroke: $primary500;
+}
+
+.mantine-Select-rightSection {
+  width: 1.5rem;
+  margin-right: 12px;
+}
+
+.mantine-NumberInput-rightSection button{
+  border: none;
+}
+
+.mantine-NumberInput-control:not(:disabled):hover {
+  background-color: white;
 }
