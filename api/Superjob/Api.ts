@@ -107,20 +107,20 @@ export default class Api {
         if (options.page !== undefined) {
             url.searchParams.set('page', String(options.page));
         }
-        if (options.filterParams?.published !== undefined) {
-            url.searchParams.set('page', String(options.filterParams.published));
+        if (options.keyword !== undefined) {
+            url.searchParams.set('keyword', options.keyword);
         }
-        if (options.filterParams?.keyword !== undefined) {
-            url.searchParams.set('page', String(options.filterParams?.keyword));
+        if (options.filterParams?.published !== undefined) {
+            url.searchParams.set('published', String(options.filterParams.published));
         }
         if (options.filterParams?.paymentFrom !== undefined) {
-            url.searchParams.set('page', String(options.filterParams?.paymentFrom));
+            url.searchParams.set('paymentFrom', String(options.filterParams?.paymentFrom));
         }
         if (options.filterParams?.paymentTo !== undefined) {
-            url.searchParams.set('page', String(options.filterParams?.paymentTo));
+            url.searchParams.set('paymentTo', String(options.filterParams?.paymentTo));
         }
         if (options.filterParams?.catalogues !== undefined) {
-            url.searchParams.set('page', String(options.filterParams?.catalogues));
+            url.searchParams.set('catalogues', String(options.filterParams?.catalogues));
         }
 
         const request: RequestInit = {

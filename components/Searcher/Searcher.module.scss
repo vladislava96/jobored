@@ -1,0 +1,16 @@
+@import '../../pages/_variables';
+
+.searcher {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 8px 12px;
+  border: solid 1px $grey200;
+  border-radius: $border-radius;
+  background-color: $white;
+}
+
+.searcher div {
+  flex-basis: 70%;
+}

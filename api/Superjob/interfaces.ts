@@ -93,12 +93,12 @@ export interface Catalogue {
 export interface VacancyOptions {
     page?: number,
     count?: number,
+    keyword?: string,
     filterParams?: FilterParams,
 }
 
 export interface FilterParams {
     published?: number,
-    keyword?: string,
     paymentFrom?: number,
     paymentTo?: number,
     catalogues?: number,

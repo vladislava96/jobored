@@ -7,9 +7,10 @@ export const vacanciesAdapter = createEntityAdapter<Vacancy>();
 const initialFilterParams: FilterParams = {};
 
 const initialState = vacanciesAdapter.getInitialState({
-    page: 0,
+    page: 1,
     pageTotal: 1,
     count: 4,
+    keyword: '',
     filterParams: initialFilterParams,
 });
 
@@ -23,10 +24,12 @@ export const loadVacancies = createAsyncThunk(
     'vacancies/load',
     async (_, thunkAPI) => {
         const { vacancies } = thunkAPI.getState() as StateWithVacancies;
+        const keyword = vacancies.keyword === '' ? undefined : vacancies.keyword;
 
         const options = {
             page: vacancies.page,
             count: vacancies.count,
+            keyword,
             filterParams: vacancies.filterParams,
         };
 
@@ -43,6 +46,9 @@ const vacanciesSlice = createSlice({
         },
         setFilterParam(state, action: PayloadAction<FilterParams>) {
             state.filterParams = action.payload;
+        },
+        setKeyword(state, action: PayloadAction<string>) {
+            state.keyword = action.payload;
         },
     },
     extraReducers(builder) {
@@ -66,7 +72,8 @@ export const {
 
 export const selectVacanciesPage = (state: StateWithVacancies) => state.vacancies.page;
 export const selectVacanciesPageTotal = (state: StateWithVacancies) => state.vacancies.pageTotal;
+export const selectVacanciesKeyword = (state: StateWithVacancies) => state.vacancies.keyword;
 
 export const vacanciesReducer = vacanciesSlice.reducer;
 
-export const { setPage, setFilterParam } = vacanciesSlice.actions;
+export const { setPage, setFilterParam, setKeyword } = vacanciesSlice.actions;

@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import VacanciesList from '../components/VacanciesList/VacanciesList';
-import { loadVacancies, selectAllVacancies, selectVacanciesPage, selectVacanciesPageTotal, setPage } from '../features/vacancies/vacancies';
+import { loadVacancies, selectAllVacancies, selectVacanciesKeyword, selectVacanciesPage, selectVacanciesPageTotal, setKeyword, setPage } from '../features/vacancies/vacancies';
+import Searcher from '../components/Searcher/Searcher';
 
 export default function JobSearchPage() {
   const vacancies = useAppSelector(selectAllVacancies);
+  const vacanciesKeyword = useAppSelector(selectVacanciesKeyword);
   const vacanciesPage = useAppSelector(selectVacanciesPage);
   const vacanciesPageTotal = useAppSelector(selectVacanciesPageTotal);
   const dispatch = useAppDispatch();
@@ -18,12 +20,27 @@ export default function JobSearchPage() {
     dispatch(loadVacancies());
   }
 
+  function onSearcherKeywordChange(value: string) {
+    dispatch(setKeyword(value));
+  }
+
+  function onSearcherSubmit() {
+    dispatch(loadVacancies());
+  }
+
   return (
-    <VacanciesList
-      vacancies={vacancies}
-      page={vacanciesPage}
-      pageTotal={vacanciesPageTotal}
-      onPageChange={onVacanciesListPageChange}
-    />
+    <>
+      <Searcher
+        keyword={vacanciesKeyword}
+        onKeywordChange={onSearcherKeywordChange}
+        onSubmit={onSearcherSubmit}
+      />
+      <VacanciesList
+        vacancies={vacancies}
+        page={vacanciesPage}
+        pageTotal={vacanciesPageTotal}
+        onPageChange={onVacanciesListPageChange}
+      />
+    </>
   );
 }

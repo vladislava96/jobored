@@ -14,15 +14,6 @@ export interface VacanciesListProps {
 
 export default function VacanciesList(props: VacanciesListProps) {
   const { vacancies, page, pageTotal, onPageChange } = props;
-  // const [activePage, setActivePage] = useState(1);
-  // const dispatch = useAppDispatch();
-  // dispatch(setPage(activePage));
-  // console.log(activePage, typeof activePage);
-
-  // function onPaginationChange(page: number) {
-  //   setActivePage(page);
-  //   onPageChange(page);
-  // }
 
   return (
     <div className={style.vacanciesList}>
