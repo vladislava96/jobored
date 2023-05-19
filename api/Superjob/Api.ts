@@ -1,143 +1,143 @@
 import { Authorization, Catalogue, VacancyCollection, VacancyOptions } from './interfaces';
 
 export default class Api {
-    private static instance?: Api;
+  private static instance?: Api;
 
-    public static getInstance() {
-        if (Api.instance === undefined) {
-            Api.instance = new Api();
-        }
-
-        return Api.instance;
+  public static getInstance() {
+    if (Api.instance === undefined) {
+      Api.instance = new Api();
     }
 
-    private baseUrl = process.env.NEXT_PUBLIC_SUPERJOB_URL || '';
-    private secretKey = process.env.NEXT_PUBLIC_SUPERJOB_SECRET_KEY || '';
-    private login = process.env.NEXT_PUBLIC_SUPERJOB_LOGIN || '';
-    private password = process.env.NEXT_PUBLIC_SUPERJOB_PASSWORD || '';
-    private clientId = process.env.NEXT_PUBLIC_SUPERJOB_CLIENT_ID || '';
-    private clientSecret = process.env.NEXT_PUBLIC_SUPERJOB_CLIENT_SECRET || '';
-    private hr = process.env.NEXT_PUBLIC_SUPERJOB_HR || '';
+    return Api.instance;
+  }
 
-    private authorization?: Authorization;
+  private baseUrl = process.env.NEXT_PUBLIC_SUPERJOB_URL || '';
+  private secretKey = process.env.NEXT_PUBLIC_SUPERJOB_SECRET_KEY || '';
+  private login = process.env.NEXT_PUBLIC_SUPERJOB_LOGIN || '';
+  private password = process.env.NEXT_PUBLIC_SUPERJOB_PASSWORD || '';
+  private clientId = process.env.NEXT_PUBLIC_SUPERJOB_CLIENT_ID || '';
+  private clientSecret = process.env.NEXT_PUBLIC_SUPERJOB_CLIENT_SECRET || '';
+  private hr = process.env.NEXT_PUBLIC_SUPERJOB_HR || '';
 
-    private async authorize(): Promise<Authorization> {
-        const url = new URL('oauth2/password', this.baseUrl);
-        url.searchParams.set('login', this.login);
-        url.searchParams.set('password', this.password);
-        url.searchParams.set('client_id', this.clientId);
-        url.searchParams.set('client_secret', this.clientSecret);
-        url.searchParams.set('hr', this.hr);
+  private authorization?: Authorization;
 
-        const request: RequestInit = {
-            method: 'POST',
-            headers: {
-                'X-Secret-Key': this.secretKey,
-                Accept: 'application/json',
-            },
-        };
+  private async authorize(): Promise<Authorization> {
+    const url = new URL('oauth2/password', this.baseUrl);
+    url.searchParams.set('login', this.login);
+    url.searchParams.set('password', this.password);
+    url.searchParams.set('client_id', this.clientId);
+    url.searchParams.set('client_secret', this.clientSecret);
+    url.searchParams.set('hr', this.hr);
 
-        const response = await fetch(url, request);
-        if (!response.ok) {
-            throw Error();
-        }
+    const request: RequestInit = {
+      method: 'POST',
+      headers: {
+        'X-Secret-Key': this.secretKey,
+        Accept: 'application/json',
+      },
+    };
 
-        return response.json();
+    const response = await fetch(url, request);
+    if (!response.ok) {
+      throw Error();
     }
 
-    public async refreshAuthorization(): Promise<Authorization> {
-        const authorization = await this.authorizeIfRequire();
+    return response.json();
+  }
 
-        const url = new URL('oauth2/refresh_token', this.baseUrl);
-        url.searchParams.set('client_id', this.clientId);
-        url.searchParams.set('client_secret', this.clientSecret);
+  public async refreshAuthorization(): Promise<Authorization> {
+    const authorization = await this.authorizeIfRequire();
 
-        const request: RequestInit = {
-            method: 'GET',
-            headers: {
-                'X-Secret-Key': this.secretKey,
-                Accept: 'application/json',
-                Authorization: `Bearer ${authorization.refresh_token}`,
-            },
-        };
+    const url = new URL('oauth2/refresh_token', this.baseUrl);
+    url.searchParams.set('client_id', this.clientId);
+    url.searchParams.set('client_secret', this.clientSecret);
 
-        const response = await fetch(url, request);
-        if (!response.ok) {
-            throw Error();
-        }
+    const request: RequestInit = {
+      method: 'GET',
+      headers: {
+        'X-Secret-Key': this.secretKey,
+        Accept: 'application/json',
+        Authorization: `Bearer ${authorization.refresh_token}`,
+      },
+    };
 
-        return response.json();
+    const response = await fetch(url, request);
+    if (!response.ok) {
+      throw Error();
     }
 
-    public async authorizeIfRequire(): Promise<Authorization> {
-        if (this.authorization === undefined) {
-            this.authorization = await this.authorize();
-        }
+    return response.json();
+  }
 
-        return this.authorization;
+  public async authorizeIfRequire(): Promise<Authorization> {
+    if (this.authorization === undefined) {
+      this.authorization = await this.authorize();
     }
 
-    public async getCatalogues(): Promise<Catalogue[]> {
-        const authorization = await this.authorizeIfRequire();
-        const url = new URL('catalogues', this.baseUrl);
-        const request: RequestInit = {
-            method: 'GET',
-            headers: {
-                'X-Secret-Key': this.secretKey,
-                'X-Api-App-Id': this.clientSecret,
-                Accept: 'application/json',
-                Authorization: `Bearer ${authorization.access_token}`,
-            },
-        };
+    return this.authorization;
+  }
 
-        const response = await fetch(url, request);
-        if (!response.ok) {
-            throw Error();
-        }
+  public async getCatalogues(): Promise<Catalogue[]> {
+    const authorization = await this.authorizeIfRequire();
+    const url = new URL('catalogues', this.baseUrl);
+    const request: RequestInit = {
+      method: 'GET',
+      headers: {
+        'X-Secret-Key': this.secretKey,
+        'X-Api-App-Id': this.clientSecret,
+        Accept: 'application/json',
+        Authorization: `Bearer ${authorization.access_token}`,
+      },
+    };
 
-        return response.json();
+    const response = await fetch(url, request);
+    if (!response.ok) {
+      throw Error();
     }
 
-    public async getVacancies(options: VacancyOptions = {}): Promise<VacancyCollection> {
-        const authorization = await this.authorizeIfRequire();
-        const url = new URL('vacancies', this.baseUrl);
-        url.searchParams.set('published', '1');
+    return response.json();
+  }
 
-        if (options.count !== undefined) {
-            url.searchParams.set('count', String(options.count));
-        }
-        if (options.page !== undefined) {
-            url.searchParams.set('page', String(options.page));
-        }
-        if (options.keyword !== undefined) {
-            url.searchParams.set('keyword', options.keyword);
-        }
-        if (options.filterParams?.paymentFrom !== undefined) {
-            url.searchParams.set('payment_from', String(options.filterParams?.paymentFrom));
-        }
-        if (options.filterParams?.paymentTo !== undefined) {
-            url.searchParams.set('payment_to', String(options.filterParams?.paymentTo));
-        }
-        if (options.filterParams?.catalogues !== undefined) {
-            url.searchParams.set('catalogues', String(options.filterParams?.catalogues));
-        }
+  public async getVacancies(options: VacancyOptions = {}): Promise<VacancyCollection> {
+    const authorization = await this.authorizeIfRequire();
+    const url = new URL('vacancies', this.baseUrl);
+    url.searchParams.set('published', '1');
 
-        const request: RequestInit = {
-            method: 'GET',
-            headers: {
-                'X-Secret-Key': this.secretKey,
-                'X-Api-App-Id': this.clientSecret,
-                Accept: 'application/json',
-                Authorization: `Bearer ${authorization.access_token}`,
-            },
-        };
-
-        const response = await fetch(url, request);
-        if (!response.ok) {
-            console.log(response);
-            throw Error();
-        }
-
-        return response.json();
+    if (options.count !== undefined) {
+      url.searchParams.set('count', String(options.count));
     }
+    if (options.page !== undefined) {
+      url.searchParams.set('page', String(options.page));
+    }
+    if (options.keyword !== undefined) {
+      url.searchParams.set('keyword', options.keyword);
+    }
+    if (options.filterParams?.paymentFrom !== undefined) {
+      url.searchParams.set('payment_from', String(options.filterParams?.paymentFrom));
+    }
+    if (options.filterParams?.paymentTo !== undefined) {
+      url.searchParams.set('payment_to', String(options.filterParams?.paymentTo));
+    }
+    if (options.filterParams?.catalogues !== undefined) {
+      url.searchParams.set('catalogues', String(options.filterParams?.catalogues));
+    }
+
+    const request: RequestInit = {
+      method: 'GET',
+      headers: {
+        'X-Secret-Key': this.secretKey,
+        'X-Api-App-Id': this.clientSecret,
+        Accept: 'application/json',
+        Authorization: `Bearer ${authorization.access_token}`,
+      },
+    };
+
+    const response = await fetch(url, request);
+    if (!response.ok) {
+      console.log(response);
+      throw Error();
+    }
+
+    return response.json();
+  }
 }
