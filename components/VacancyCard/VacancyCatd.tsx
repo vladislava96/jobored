@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import style from './VacancyCard.module.scss';
 import { Vacancy } from '../../api/Superjob/interfaces';
 
@@ -9,14 +10,31 @@ export interface VacancyCardProps {
 export default function VacancyCard(props: VacancyCardProps) {
   const { vacancy } = props;
 
+  function createPaymentMessage() {
+    if (vacancy.payment_from === 0 && vacancy.payment_to === 0) {
+      return 'в';
+    }
+    if (vacancy.payment_from !== 0 && vacancy.payment_to === 0) {
+      return `от ${vacancy.payment_from}`;
+    }
+    if (vacancy.payment_from === 0 && vacancy.payment_to !== 0) {
+      return `до ${vacancy.payment_to}`;
+    }
+    return 'в';
+  }
+
   return (
     <div className={style.vacancy}>
       <div className={style.vacancy__info}>
-        <div className={style.vacancy__title}>
-          <strong>{vacancy.profession}</strong>
-        </div>
+        <Link href={`vacancy/${vacancy.id}`} passHref>
+          <div className={style.vacancy__title}>
+            <strong>{vacancy.profession}</strong>
+          </div>
+        </Link>
         <div>
-          <strong>з/п {vacancy.payment_from} - {vacancy.payment_to} {vacancy.currency}</strong>
+          <strong>
+            з/п {createPaymentMessage()}{` ${vacancy.currency}`}
+          </strong>
           <span className={style.vacancy__delimiter}>•</span>
           {vacancy.type_of_work.title}
         </div>

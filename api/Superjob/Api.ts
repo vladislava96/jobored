@@ -1,4 +1,4 @@
-import { Authorization, Catalogue, VacancyCollection, VacancyOptions } from './interfaces';
+import { Authorization, Catalogue, Vacancy, VacancyCollection, VacancyOptions } from './interfaces';
 
 export default class Api {
   private static instance?: Api;
@@ -135,6 +135,28 @@ export default class Api {
     const response = await fetch(url, request);
     if (!response.ok) {
       console.log(response);
+      throw Error();
+    }
+
+    return response.json();
+  }
+
+  public async getVacancy(id: number): Promise<Vacancy> {
+    const authorization = await this.authorizeIfRequire();
+    const url = new URL(`vacancies/${id}`, this.baseUrl);
+
+    const request: RequestInit = {
+      method: 'GET',
+      headers: {
+        'X-Secret-Key': this.secretKey,
+        'X-Api-App-Id': this.clientSecret,
+        Accept: 'application/json',
+        Authorization: `Bearer ${authorization.access_token}`,
+      },
+    };
+
+    const response = await fetch(url, request);
+    if (!response.ok) {
       throw Error();
     }
 

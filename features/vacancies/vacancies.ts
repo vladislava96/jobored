@@ -20,6 +20,11 @@ interface StateWithVacancies {
   vacancies: VacanciesState;
 }
 
+export const loadVacancy = createAsyncThunk(
+  'vacancies/loadOne',
+  async (id: number) => Api.getInstance().getVacancy(id)
+);
+
 export const loadVacancies = createAsyncThunk(
   'vacancies/load',
   async (_, thunkAPI) => {
@@ -66,13 +71,24 @@ const vacanciesSlice = createSlice({
       })
       .addCase(loadVacancies.rejected, (state, action) => {
         global.console.error('Vacancies loading error:', action.error);
+      })
+      .addCase(loadVacancy.fulfilled, (state, action) => {
+        vacanciesAdapter.setOne(state, action.payload);
+      })
+      .addCase(loadVacancy.rejected, (state, action) => {
+        global.console.error('Vacancy loading error:', action.error);
       });
   },
 });
 
-export const {
+const {
   selectAll: selectAllVacancies,
+  selectById,
 } = vacanciesAdapter.getSelectors((state: StateWithVacancies) => state.vacancies);
+
+export { selectAllVacancies };
+export const selectVacancyById =
+  (id: number) => (state: StateWithVacancies) => selectById(state, id);
 
 export const selectVacanciesPage = (state: StateWithVacancies) => state.vacancies.page;
 export const selectVacanciesPageTotal = (state: StateWithVacancies) => state.vacancies.pageTotal;

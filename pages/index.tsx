@@ -14,7 +14,7 @@ export default function JobSearchPage() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-      dispatch(loadVacancies());
+    dispatch(loadVacancies());
   }, []);
 
   function onVacanciesListPageChange(page: number) {

@@ -1,4 +1,4 @@
-@import '../../pages/_variables';
+@import '../../pages/variables';
 
 .vacancy {
   display: flex;
@@ -34,6 +34,9 @@
 }
 
 .vacancy__locationCity {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
   margin-left: 8px;
 }
 

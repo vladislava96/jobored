@@ -46,6 +46,7 @@ export interface Vacancy {
   address: null;
   payment: null;
   profession: string;
+  candidat: string;
   work: string;
   metro: Metro[];
   currency: string;
