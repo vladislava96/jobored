@@ -42,12 +42,18 @@
 
 .vacancy__star {
   cursor: pointer;
-}
-
-.vacancy__star svg:hover path {
-  stroke: $primary500;
-}
-
-.vacancy__star svg:active {
-  fill: $primary500;
+  &_active{
+    svg {
+      fill: $primary500;
+    }
+    svg path {
+      stroke: $primary500;
+    }
+  }
+  svg:hover path {
+    stroke: $primary500;
+  }
+  svg:active {
+    fill: $primary500;
+  }
 }

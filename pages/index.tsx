@@ -46,6 +46,7 @@ export default function JobSearchPage() {
           page={vacanciesPage}
           pageTotal={vacanciesPageTotal}
           onPageChange={onVacanciesListPageChange}
+          isFavoritePage={false}
         />
       </div>
     </div>
