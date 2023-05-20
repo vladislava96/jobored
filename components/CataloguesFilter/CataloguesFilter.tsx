@@ -25,6 +25,7 @@ export default function CataloguesFilter(props: CataloguesFilterProps) {
   return (
     <div className={style.cataloguesFilter}>
       <Select
+        data-elem="industry-select"
         label="Отрасль"
         placeholder="Выберите отрасль"
         radius="md"

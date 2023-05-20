@@ -69,7 +69,7 @@ export default function Filter() {
             onPaymentFromChange={setPaymentFromFilter}
             onPaymentToChange={setPaymentToFilter}
           />
-          <Button type="submit">Применить</Button>
+          <Button data-elem="search-button" type="submit">Применить</Button>
       </div>
     </form>
   );

@@ -28,6 +28,7 @@ export default function Searcher(props: SearcherProps) {
     <form className={style.searcher} onSubmit={onFormSubmit}>
       <div>
         <Input
+          data-elem="search-input"
           icon={
             <Image src="/search-icon.svg" alt="search" width={16} height={16} />
           }
@@ -37,7 +38,7 @@ export default function Searcher(props: SearcherProps) {
           onChange={onInputChange}
         />
       </div>
-      <Button type="submit">Поиск</Button>
+      <Button data-elem="search-button" type="submit">Поиск</Button>
     </form>
   );
 }

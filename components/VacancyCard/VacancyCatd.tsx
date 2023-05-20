@@ -69,6 +69,7 @@ export default function VacancyCard(props: VacancyCardProps) {
         </div>
       </div>
       <div
+        data-elem={`vacancy-${vacancy.id}-shortlist-button`}
         role="button"
         tabIndex={0}
         className={vacancyStarClassName}

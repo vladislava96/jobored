@@ -24,7 +24,7 @@ export default function VacanciesList(props: VacanciesListProps) {
     <div className={vacanciesListClassName}>
       <div className={style.vacanciesListItems}>
         {vacancies.map((vacancy) => (
-          <VacancyCard key={vacancy.id} vacancy={vacancy} />
+          <VacancyCard data-elem={`vacancy-${vacancy.id}`} key={vacancy.id} vacancy={vacancy} />
         ))}
       </div>
       <Pagination value={page} onChange={onPageChange} total={pageTotal} />

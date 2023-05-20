@@ -27,6 +27,7 @@ export default function SalaryFilter(props: SalaryFilterProps) {
   return (
     <div className={style.salaryFilter}>
       <NumberInput
+        data-elem="salary-from-input"
         placeholder="От"
         label="Отрасль"
         radius="md"
@@ -35,6 +36,7 @@ export default function SalaryFilter(props: SalaryFilterProps) {
         onChange={onPaymentFromInputChange}
       />
       <NumberInput
+        data-elem="salary-to-input"
         placeholder="До"
         radius="md"
         size="md"
