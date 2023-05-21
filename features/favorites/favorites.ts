@@ -18,11 +18,22 @@ const favoritesSlice = createSlice({
   name: 'favorites',
   initialState,
   reducers: {
+    loadFavorites(state) {
+      if (localStorage.getItem('favorites') !== null) {
+        const localStorageData = localStorage.getItem('favorites');
+        if (localStorageData !== null) {
+          return JSON.parse(localStorageData) as FavoritesState;
+        }
+      }
+      return state;
+    },
     addFavorite(state, action: PayloadAction<Vacancy>) {
       favoritesAdapter.addOne(state, action.payload);
+      localStorage.setItem('favorites', JSON.stringify(state));
     },
     removeFavorite(state, action: PayloadAction<number>) {
       favoritesAdapter.removeOne(state, action.payload);
+      localStorage.setItem('favorites', JSON.stringify(state));
     },
     setFavoritesPage(state, action: PayloadAction<number>) {
       state.page = action.payload;
@@ -40,6 +51,7 @@ export const selectAllFavorites = selectAll;
 export const selectFavoritesOnPage = (state: StateWithFavorites) => {
   const { page, count } = state.favorites;
   const favorites = selectAllFavorites(state);
+
   const startIndex = (page - 1) * count;
   let endIndex = startIndex + count;
 
@@ -66,4 +78,5 @@ export const {
   addFavorite,
   removeFavorite,
   setFavoritesPage,
+  loadFavorites,
 } = favoritesSlice.actions;

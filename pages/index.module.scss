@@ -8,15 +8,19 @@
   margin: 40px auto 0;
 }
 
+.jobSearchFilter {
+  flex-basis: 315px;
+}
+
 .jobSearchList {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  width: 70%;
+  flex-basis: 733px;
 }
 
-@media (max-width: 576px) {
+@media (max-width: 735px) {
   .jobSearch {
     flex-flow: column nowrap;
   }

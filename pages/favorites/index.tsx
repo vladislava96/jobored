@@ -1,8 +1,10 @@
 import Image from 'next/image';
 import { Button } from '@mantine/core';
+import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import VacanciesList from '../../components/VacanciesList/VacanciesList';
 import {
+  loadFavorites,
   selectFavoritesOnPage,
   selectFavoritesPage,
   selectFavoritesPageTotal,
@@ -15,6 +17,10 @@ export default function FavoritesPage() {
   const favoritesPage = useAppSelector(selectFavoritesPage);
   const favoritesPageTotal = useAppSelector(selectFavoritesPageTotal);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(loadFavorites());
+  }, []);
 
   function onVacanciesListPageChange(page: number) {
     dispatch(setFavoritesPage(page));
@@ -34,7 +40,7 @@ export default function FavoritesPage() {
           page={favoritesPage}
           pageTotal={favoritesPageTotal}
           onPageChange={onVacanciesListPageChange}
-          isFavoritePage
+          isFavoritesPage
         />
       )}
     </div>

@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import VacanciesList from '../components/VacanciesList/VacanciesList';
-import { loadVacancies, selectAllVacancies, selectVacanciesKeyword, selectVacanciesPage, selectVacanciesPageTotal, setKeyword, setPage } from '../features/vacancies/vacancies';
+import { loadVacancies, selectAllVacancies, selectLoading, selectVacanciesKeyword, selectVacanciesPage, selectVacanciesPageTotal, setKeyword, setPage, startToLoad } from '../features/vacancies/vacancies';
 import Searcher from '../components/Searcher/Searcher';
 import Filter from '../components/Filter/Filter';
 import styles from './index.module.scss';
+import Loader from '../components/Loader/Loader';
 
 export default function JobSearchPage() {
   const vacancies = useAppSelector(selectAllVacancies);
@@ -14,11 +15,15 @@ export default function JobSearchPage() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    dispatch(startToLoad());
     dispatch(loadVacancies());
   }, []);
 
+  const loading = useAppSelector(selectLoading);
+
   function onVacanciesListPageChange(page: number) {
     dispatch(setPage(page));
+    dispatch(startToLoad());
     dispatch(loadVacancies());
   }
 
@@ -27,6 +32,7 @@ export default function JobSearchPage() {
   }
 
   function onSearcherSubmit() {
+    dispatch(startToLoad());
     dispatch(loadVacancies());
   }
 
@@ -41,13 +47,21 @@ export default function JobSearchPage() {
           onKeywordChange={onSearcherKeywordChange}
           onSubmit={onSearcherSubmit}
         />
-        <VacanciesList
-          vacancies={vacancies}
-          page={vacanciesPage}
-          pageTotal={vacanciesPageTotal}
-          onPageChange={onVacanciesListPageChange}
-          isFavoritePage={false}
-        />
+        {
+          loading ? (
+            <div>
+              <Loader />
+            </div>
+          ) : (
+            <VacanciesList
+              vacancies={vacancies}
+              page={vacanciesPage}
+              pageTotal={vacanciesPageTotal}
+              onPageChange={onVacanciesListPageChange}
+              isFavoritesPage={false}
+            />
+          )
+        }
       </div>
     </div>
   );

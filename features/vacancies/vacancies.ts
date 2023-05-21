@@ -11,6 +11,7 @@ const initialState = vacanciesAdapter.getInitialState({
   pageTotal: 1,
   count: 4,
   keyword: '',
+  loading: false,
   filterParams: initialFilterParams,
 });
 
@@ -59,6 +60,9 @@ const vacanciesSlice = createSlice({
     setPaymentTo(state, action: PayloadAction<number | undefined>) {
       state.filterParams.paymentTo = action.payload;
     },
+    startToLoad(state) {
+      state.loading = true;
+    },
   },
   extraReducers(builder) {
     builder
@@ -68,15 +72,19 @@ const vacanciesSlice = createSlice({
           state.pageTotal = 125;
         }
         vacanciesAdapter.setAll(state, action.payload.objects);
+        state.loading = false;
       })
       .addCase(loadVacancies.rejected, (state, action) => {
         global.console.error('Vacancies loading error:', action.error);
+        state.loading = false;
       })
       .addCase(loadVacancy.fulfilled, (state, action) => {
         vacanciesAdapter.setOne(state, action.payload);
+        state.loading = false;
       })
       .addCase(loadVacancy.rejected, (state, action) => {
         global.console.error('Vacancy loading error:', action.error);
+        state.loading = false;
       });
   },
 });
@@ -93,6 +101,7 @@ export const selectVacancyById =
 export const selectVacanciesPage = (state: StateWithVacancies) => state.vacancies.page;
 export const selectVacanciesPageTotal = (state: StateWithVacancies) => state.vacancies.pageTotal;
 export const selectVacanciesKeyword = (state: StateWithVacancies) => state.vacancies.keyword;
+export const selectLoading = (state: StateWithVacancies) => state.vacancies.loading;
 
 export const vacanciesReducer = vacanciesSlice.reducer;
 
@@ -103,4 +112,5 @@ export const {
   setCatalogues,
   setPaymentFrom,
   setPaymentTo,
+  startToLoad,
 } = vacanciesSlice.actions;
