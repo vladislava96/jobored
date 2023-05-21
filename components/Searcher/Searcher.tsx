@@ -1,4 +1,4 @@
-import { Button, Input } from '@mantine/core';
+import { Button, Input, px } from '@mantine/core';
 import Image from 'next/image';
 import { ChangeEvent, FormEvent } from 'react';
 import style from './Searcher.module.scss';
@@ -38,7 +38,24 @@ export default function Searcher(props: SearcherProps) {
           onChange={onInputChange}
         />
       </div>
-      <Button data-elem="search-button" type="submit">Поиск</Button>
+      <Button
+        data-elem="search-button"
+        radius="md"
+        type="submit"
+        styles={(theme) => ({
+          root: {
+            backgroundColor: '#5E96FC',
+            height: px(32),
+            paddingLeft: px(20),
+            paddingRight: px(20),
+            '&:not([data-disabled])': theme.fn.hover({
+              backgroundColor: theme.fn.darken('#3B7CD3', 0.05),
+            }),
+          },
+        })}
+      >
+        Поиск
+      </Button>
     </form>
   );
 }

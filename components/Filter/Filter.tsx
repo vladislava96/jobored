@@ -1,4 +1,4 @@
-import { Button } from '@mantine/core';
+import { Button, px } from '@mantine/core';
 import { FormEvent, KeyboardEvent, useState } from 'react';
 import style from './Filter.module.scss';
 import CataloguesFilter from '../CataloguesFilter/CataloguesFilter';
@@ -69,7 +69,24 @@ export default function Filter() {
             onPaymentFromChange={setPaymentFromFilter}
             onPaymentToChange={setPaymentToFilter}
           />
-          <Button data-elem="search-button" type="submit">Применить</Button>
+          <Button
+            data-elem="search-button"
+            radius="md"
+            type="submit"
+            styles={(theme) => ({
+              root: {
+                backgroundColor: '#5E96FC',
+                height: px(40),
+                paddingLeft: px(98.5),
+                paddingRight: px(98.5),
+                '&:not([data-disabled])': theme.fn.hover({
+                  backgroundColor: theme.fn.darken('#3B7CD3', 0.05),
+                }),
+              },
+            })}
+          >
+            Применить
+          </Button>
       </div>
     </form>
   );

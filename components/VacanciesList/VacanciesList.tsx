@@ -2,21 +2,21 @@ import { Pagination } from '@mantine/core';
 import VacancyCard from '../VacancyCard/VacancyCatd';
 import style from './VacanciesList.module.scss';
 import { Vacancy } from '../../api/Superjob/interfaces';
-// import { useAppDispatch } from '../../app/hooks';
-// import { setPage } from '../../features/vacancies/vacancies';
 
 export interface VacanciesListProps {
   vacancies: Vacancy[];
   page: number;
   pageTotal: number;
   onPageChange: (page: number) => void;
-  isFavoritePage: boolean;
+  isFavoritesPage: boolean;
 }
 
 export default function VacanciesList(props: VacanciesListProps) {
-  const { vacancies, page, pageTotal, onPageChange, isFavoritePage } = props;
+  const { vacancies, page, pageTotal, onPageChange, isFavoritesPage } = props;
+
   let vacanciesListClassName = style.vacanciesList;
-  if (isFavoritePage) {
+
+  if (isFavoritesPage) {
     vacanciesListClassName = `${vacanciesListClassName} ${style.vacanciesListFavoritePage}`;
   }
 

@@ -28,6 +28,9 @@
   color: $grey500;
   transition: transform 0.3s ease-in-out;
   cursor: pointer;
+  svg {
+    margin-left: 4px;
+  }
 }
 
 .filter__reset:hover {
