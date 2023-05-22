@@ -1,27 +1,9 @@
 @import 'variables';
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 body {
-  color: $black;
-  background-color: $grey150;
+  font-family: 'Inter', sans-serif;
 }
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
 
 label.mantine-InputWrapper-label {
   line-height: 1;

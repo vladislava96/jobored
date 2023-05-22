@@ -134,7 +134,6 @@ export default class Api {
 
     const response = await fetch(url, request);
     if (!response.ok) {
-      console.log(response);
       throw Error();
     }
 

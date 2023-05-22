@@ -36,6 +36,7 @@ export default function Searcher(props: SearcherProps) {
           variant="unstyled"
           value={keyword}
           onChange={onInputChange}
+          size="xs"
         />
       </div>
       <Button
@@ -49,7 +50,7 @@ export default function Searcher(props: SearcherProps) {
             paddingLeft: px(20),
             paddingRight: px(20),
             '&:not([data-disabled])': theme.fn.hover({
-              backgroundColor: theme.fn.darken('#3B7CD3', 0.05),
+              backgroundColor: '#3B7CD3',
             }),
           },
         })}

@@ -24,10 +24,21 @@ export default function VacanciesList(props: VacanciesListProps) {
     <div className={vacanciesListClassName}>
       <div className={style.vacanciesListItems}>
         {vacancies.map((vacancy) => (
-          <VacancyCard data-elem={`vacancy-${vacancy.id}`} key={vacancy.id} vacancy={vacancy} />
+          <VacancyCard key={vacancy.id} vacancy={vacancy} />
         ))}
       </div>
-      <Pagination value={page} onChange={onPageChange} total={pageTotal} />
+      <Pagination
+        value={page}
+        onChange={onPageChange}
+        total={pageTotal}
+        styles={() => ({
+          control: {
+            '&[data-active]': {
+              backgroundColor: '#5E96FC',
+            },
+          },
+        })}
+      />
     </div>
   );
 }

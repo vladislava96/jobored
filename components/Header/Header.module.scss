@@ -3,16 +3,24 @@
 .header {
   width: 100%;
   background-color: white;
-}
-
-.header__nav {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  max-width: 1108px;
-  height: 84px;
-  margin: 0 auto;
+  &__nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    max-width: 1108px;
+    height: 84px;
+    margin: 0 auto;
+  }
+  &__link {
+    margin-right: 60px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+  }
+  &__link_active {
+    color: $primary500;
+  }
 }
 
 .logo {
@@ -25,17 +33,6 @@
   font-weight: 600;
   font-size: 24px;
   line-height: 36px;
-}
-
-.header__link {
-  margin-right: 60px;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 20px;
-}
-
-.header__link_active {
-  color: $primary500;
 }
 
 @media (max-width: 1108px) {
@@ -55,11 +52,13 @@
 }
 
 @media (max-width: 576px) {
-  .header__nav {
-    margin: 0 5px;
-  }
-  .header__link {
-    margin-right: 0px;
-    margin-left: 30px;
+  .header {
+    &__nav {
+      margin: 0 5px;
+    }
+    &__link {
+      margin-right: 0px;
+      margin-left: 30px;
+    }
   }
 }

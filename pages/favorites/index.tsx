@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { Button } from '@mantine/core';
 import { useEffect } from 'react';
+import Link from 'next/link';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import VacanciesList from '../../components/VacanciesList/VacanciesList';
 import {
@@ -32,7 +33,9 @@ export default function FavoritesPage() {
         <div className={style.favoritePage__empty}>
           <Image src="../empty.svg" alt="empty" width={240} height={230.27} />
           <span className={style.favoritePage__emptyMessage}>Упс, здесь еще ничего нет!</span>
-          <Button variant="light" radius="md">Поиск Вакансий</Button>
+          <Link href="/" passHref>
+            <Button variant="light" radius="md">Поиск Вакансий</Button>
+          </Link>
         </div>
       ) : (
         <VacanciesList

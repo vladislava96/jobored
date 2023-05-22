@@ -8,52 +8,46 @@
   border: solid 1px $grey200;
   border-radius: $border-radius;
   background-color: $white;
-}
-
-.vacancy__info {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.vacancy__title strong {
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 24px;
-  color: $primary500;
-}
-
-.vacancy__delimiter {
-  margin: 12px;
-  color: $grey600;
-}
-
-.vacancy__location {
-  display: flex;
-  align-items: center;
-}
-
-.vacancy__locationCity {
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 19px;
-  margin-left: 8px;
-}
-
-.vacancy__star {
-  cursor: pointer;
-  &_active{
-    svg {
-      fill: $primary500;
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  &__title strong {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    color: $primary500;
+  }
+  &__delimiter {
+    margin: 12px;
+    color: $grey600;
+  }
+  &__location {
+    display: flex;
+    align-items: center;
+  }
+  &__locationCity {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    margin-left: 8px;
+  }
+  &__star {
+    cursor: pointer;
+    &_active{
+      svg {
+        fill: $primary500;
+      }
+      svg path {
+        stroke: $primary500;
+      }
     }
-    svg path {
+    svg:hover path {
       stroke: $primary500;
     }
-  }
-  svg:hover path {
-    stroke: $primary500;
-  }
-  svg:active {
-    fill: $primary500;
+    svg:active {
+      fill: $primary500;
+    }
   }
 }

@@ -49,7 +49,7 @@ export default function VacancyCard(props: VacancyCardProps) {
   }
 
   return (
-    <div className={style.vacancy}>
+    <div className={style.vacancy} data-elem={`vacancy-${vacancy.id}`}>
       <div className={style.vacancy__info}>
         <Link href={`vacancy/${vacancy.id}`} passHref>
           <div className={style.vacancy__title}>
