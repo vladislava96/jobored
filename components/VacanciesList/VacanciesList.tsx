@@ -24,7 +24,7 @@ export default function VacanciesList(props: VacanciesListProps) {
     <div className={vacanciesListClassName}>
       <div className={style.vacanciesListItems}>
         {vacancies.map((vacancy) => (
-          <VacancyCard key={vacancy.id} vacancy={vacancy} />
+          <VacancyCard key={vacancy.id} vacancy={vacancy} theme="JobSearchPage" />
         ))}
       </div>
       <Pagination

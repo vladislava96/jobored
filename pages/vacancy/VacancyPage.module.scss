@@ -6,72 +6,13 @@
   gap: 20px;
   max-width: 773px;
   margin: 20px auto 50px;
-  &__vacancy {
-    display: flex;
-    justify-content: space-between;
-  }
 
-  &__vacancy, &__description {
+  &__description {
     width: 100%;
     padding: 24px;
     border: solid 1px $grey200;
     border-radius: $border-radius;
     background-color: $white;
-  }
-
-  &__description, &__info {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  &__description {
     gap: 20px;
-  }
-
-  &__info {
-    gap: 12px;
-  }
-
-  &__title {
-    h2 {
-      font-weight: 700;
-      font-size: 28px;
-      line-height: 34px;
-      color: $black;
-    }
-  }
-
-  &__payment {
-    font-size: 20px;
-    line-height: 20px;
-  }
-
-  &__delimiter {
-    margin: 12px;
-    color: $grey600;
-  }
-
-  &__location {
-    display: flex;
-    align-items: center;
-  }
-
-  &__locationCity {
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 140%;
-    margin-left: 8px;
-  }
-
-  &__star {
-    cursor: pointer;
-
-    svg:hover path {
-      stroke: $primary500;
-    }
-
-    svg:active {
-      fill: $primary500;
-    }
   }
 }

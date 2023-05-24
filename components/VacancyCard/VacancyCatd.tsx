@@ -8,15 +8,24 @@ import { addFavorite, removeFavorite, selectIsVacancyFavorite } from '../../feat
 
 export interface VacancyCardProps {
   vacancy: Vacancy;
+  theme: string;
 }
 
 export default function VacancyCard(props: VacancyCardProps) {
-  const { vacancy } = props;
+  const { vacancy, theme } = props;
   const isFavoriteVacancy = useAppSelector(selectIsVacancyFavorite(vacancy.id));
 
   const vacancyStarClassName = isFavoriteVacancy ?
     `${style.vacancy__star} ${style.vacancy__star_active}` :
     style.vacancy__star;
+
+  const vacancyTitleClassName = theme === 'vacancyPage' ?
+    `${style.vacancy__title} ${style.vacancy__title_vacancyPage}` :
+    style.vacancy__title;
+
+  const vacancyPaymentClassName = theme === 'vacancyPage' ?
+    `${style.vacancy__payment} ${style.vacancy__payment_vacancyPage}` :
+    style.vacancy__payment;
 
   const dispatch = useAppDispatch();
 
@@ -52,11 +61,11 @@ export default function VacancyCard(props: VacancyCardProps) {
     <div className={style.vacancy} data-elem={`vacancy-${vacancy.id}`}>
       <div className={style.vacancy__info}>
         <Link href={`vacancy/${vacancy.id}`} passHref>
-          <div className={style.vacancy__title}>
+          <div className={vacancyTitleClassName}>
             <strong>{vacancy.profession}</strong>
           </div>
         </Link>
-        <div>
+        <div className={vacancyPaymentClassName}>
           <strong>
             з/п {createPaymentMessage()} {vacancy.currency}
           </strong>
@@ -64,7 +73,7 @@ export default function VacancyCard(props: VacancyCardProps) {
           {vacancy.type_of_work.title}
         </div>
         <div className={style.vacancy__location}>
-          <Image src="./location.svg" alt="location" width={24} height={24} />
+          <Image src="/location.svg" alt="location" width={24} height={24} />
           <span className={style.vacancy__locationCity}>{vacancy.town.title}</span>
         </div>
       </div>
